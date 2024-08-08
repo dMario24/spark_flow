@@ -34,17 +34,18 @@ with DAG(
 ) as dag:
 
     def re_partition(ds_nodash):
-        # import PDM Package ...
-        print("*" * 33)
-        print(ds_nodash)
-        print("*" * 33)
-
+        from spark_flow.re import re_partition
+        df_row_cnt, read_path, write_path= re_partition(ds_nodash)
+        print(f'df_row_cnt:{df_row_cnt}')
+        print(f'read_path:{read_path}')
+        print(f'write_path:{write_path}')
+    
 
     re_task = PythonVirtualenvOperator(
         task_id='re.partition',
         python_callable=re_partition,
         system_site_packages=False,
-        requirements=["git+https://github.com/dMario24/mov.git@0.3.3/url_param"],
+        requirements=["git+https://github.com/dMario24/spark_flow.git@0.2.0/airflowdag"],
     )
 
     join_df = BashOperator(
