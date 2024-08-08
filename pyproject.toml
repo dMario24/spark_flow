@@ -5,7 +5,10 @@ description = "Default template for PDM package"
 authors = [
     {name = "dMario24", email = "data.mario24@gmail.com"},
 ]
-dependencies = []
+dependencies = [
+    "pandas>=2.2.2",
+    "pyarrow>=17.0.0",
+]
 requires-python = "==3.11.*"
 readme = "README.md"
 license = {text = "MIT"}
@@ -13,3 +16,13 @@ license = {text = "MIT"}
 
 [tool.pdm]
 distribution = false
+
+[tool.pdm.dev-dependencies]
+test = [
+    "pytest>=8.3.2",
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  ".", "src",                                                                                                                                                             
+]
