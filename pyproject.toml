@@ -1,7 +1,7 @@
 [project]
 name = "spark_flow"
-version = "0.2.0"
-description = "Default template for PDM package"
+version = "0.3.1"
+description = "a joint operation between Pais Park and Airflow"
 authors = [
     {name = "dMario24", email = "data.mario24@gmail.com"},
 ]

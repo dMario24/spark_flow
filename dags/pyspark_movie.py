@@ -19,7 +19,7 @@ from airflow.operators.python import (
 with DAG(
     'pyspark_movie',
     default_args={
-        'depends_on_past': False,
+        'depends_on_past': True,
         'retries': 1,
         'retry_delay': timedelta(seconds=3),
     },
@@ -28,7 +28,7 @@ with DAG(
     description='processing pyspark for movie data',
     schedule="10 2 * * *",
     start_date=datetime(2015, 1, 1),
-    end_date=datetime(2025, 3, 1),
+    end_date=datetime(2025, 1, 5),
     catchup=True,
     tags=['api', 'movie', 'amt', 'pyspark'],
 ) as dag:
@@ -46,21 +46,20 @@ with DAG(
         python_callable=re_partition,
         system_site_packages=False,
         requirements=["git+https://github.com/dMario24/spark_flow.git@0.2.0/airflowdag"],
+        venv_cache_path='/home/diginori/venv_cache/pyspark_movie/re_task'
     )
 
     join_df = BashOperator(
         task_id='join.df',
         bash_command='''
-            echo "spark-submit....."
-            echo "{{ds_nodash}}"
+            $SPARK_HOME/bin/spark-submit /home/diginori/code/spark_flow/pyspark/join_df.py "join_df_app" {{ds_nodash}}
             '''
     )
 
     agg_df = BashOperator(
         task_id='agg.df',
         bash_command='''
-            echo "spark-submit....."
-            echo "{{ds_nodash}}"
+            $SPARK_HOME/bin/spark-submit /home/diginori/code/spark_flow/pyspark/agg_movie.py "agg_movie_app" {{ds_nodash}}
             '''
     )
     
