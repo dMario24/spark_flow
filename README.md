@@ -23,3 +23,13 @@ re_task = PythonVirtualenvOperator(
 ```bash
 $ pip install git+https://github.com/dMario24/spark_flow.git@0.2.0/airflowdag
 ```
+
+### DATA
+```
+$ tree -L 2 data
+data
+└── movie
+    ├── extract
+    ├── hive
+    └── repartition
+```
